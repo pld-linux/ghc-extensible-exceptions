@@ -2,7 +2,7 @@
 Summary:	Extensible exceptions
 Name:		ghc-%{pkgname}
 Version:	0.1.1.4
-Release:	1
+Release:	2
 License:	BSD
 Group:		Development/Languages
 Source0:	http://hackage.haskell.org/packages/archive/%{pkgname}/%{version}/%{pkgname}-%{version}.tar.gz
@@ -20,6 +20,20 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 This package provides extensible exceptions for both new and old
 versions of GHC (i.e., < 6.10).
 
+%package prof
+Summary:	Profiling %{pkgname} library for GHC
+Summary(pl.UTF-8):	Biblioteka profilująca %{pkgname} dla GHC.
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description prof
+Profiling %{pkgname} library for GHC.  Should be installed when
+GHC's profiling subsystem is needed.
+
+%description prof -l pl.UTF-8
+Biblioteka profilująca %{pkgname} dla GHC. Powinna być zainstalowana
+kiedy potrzebujemy systemu profilującego z GHC.
+
 %package doc
 Summary:	HTML documentation for %{pkgname}
 Summary(pl.UTF-8):	Dokumentacja w formacie HTML dla %{pkgname}
@@ -35,7 +49,7 @@ Dokumentacja w formacie HTML dla %{pkgname}.
 %setup -q -n %{pkgname}-%{version}
 
 %build
-runhaskell Setup.hs configure -v2 \
+runhaskell Setup.hs configure -v2 --enable-library-profiling \
 	--prefix=%{_prefix} \
 	--libdir=%{_libdir} \
 	--libexecdir=%{_libexecdir} \
@@ -70,7 +84,19 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}
+%dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.o
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.a
+%exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*_p.a
+
+%dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control
+%dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control/Exception
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control/Exception/*.hi
+
+%files prof
+%defattr(644,root,root,755)
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*_p.a
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control/Exception/*.p_hi
 
 %files doc
 %defattr(644,root,root,755)
