@@ -7,7 +7,7 @@ Summary:	Extensible exceptions
 Summary(pl.UTF-8):	Rozszerzalne wyjątki
 Name:		ghc-%{pkgname}
 Version:	0.1.1.4
-Release:	2
+Release:	3
 License:	BSD
 Group:		Development/Languages
 #SourceDownload: http://hackage.haskell.org/package/extensible-exceptions
@@ -106,16 +106,18 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/HSextensible-exceptions-%{version}.o
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSextensible-exceptions-%{version}.a
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSextensible-exceptions-%{version}-*.so
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSextensible-exceptions-%{version}-*.a
+%exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSextensible-exceptions-%{version}-*_p.a
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control/Exception
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control/Exception/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control/Exception/*.dyn_hi
 
 %if %{with prof}
 %files prof
 %defattr(644,root,root,755)
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSextensible-exceptions-%{version}_p.a
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSextensible-exceptions-%{version}-*_p.a
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Control/Exception/*.p_hi
 %endif
 
