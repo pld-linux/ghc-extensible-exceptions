@@ -7,7 +7,7 @@ Summary:	Extensible exceptions
 Summary(pl.UTF-8):	Rozszerzalne wyjątki
 Name:		ghc-%{pkgname}
 Version:	0.1.1.4
-Release:	3
+Release:	4
 License:	BSD
 Group:		Development/Languages
 #SourceDownload: http://hackage.haskell.org/package/extensible-exceptions
